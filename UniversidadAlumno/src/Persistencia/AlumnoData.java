@@ -23,7 +23,7 @@ public class AlumnoData {
     }
 
     public void guardarAlumno(Alumno alumno) {
-        String sql = "INSERT INTO alumno (dni, nombre, fecha, activo) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO alumno (dni, nombre, fecNac, activo) VALUES (?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -59,7 +59,7 @@ public class AlumnoData {
                         rs.getInt("idAlumno"),
                         rs.getInt("dni"),
                         rs.getString("nombre"),
-                        rs.getDate("fecha"),
+                        rs.getDate("fecNac"),
                         rs.getBoolean("activo")
                 );
             }
@@ -86,7 +86,7 @@ public class AlumnoData {
                     rs.getInt("idAlumno"),
                     rs.getInt("dni"),
                     rs.getString("nombre"),
-                    rs.getDate("fecha"),
+                    rs.getDate("fecNac"),
                     rs.getBoolean("activo")
             );
             lista.add(a);
