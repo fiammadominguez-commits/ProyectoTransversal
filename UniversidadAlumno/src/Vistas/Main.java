@@ -37,9 +37,9 @@ public class Main {
         //   3. GUARDAR ALUMNO
       
         Alumno alumno = new Alumno(
-                28180533,
+                41180533,
                 "Laura Dalma",
-                Date.valueOf("1999-04-07"),
+                Date.valueOf("2000-04-07"),
                 true
         );
 
@@ -52,7 +52,7 @@ public class Main {
 
         //   4. GUARDAR MATERIA
       
-        Materia materia = new Materia("Programación I", 1);
+        Materia materia = new Materia("Laboratorio I", 1);
         materiaData.guardarMateria(materia);
 
         //   5. GUARDAR CURSADA
