@@ -22,6 +22,8 @@ public class AlumnoData {
         this.con = conexion.buscarConexion();
     }
 
+    
+    //Metodo Guardar Alumno
     public void guardarAlumno(Alumno alumno) {
         String sql = "INSERT INTO alumno (dni, nombre, fecNac, activo) VALUES (?, ?, ?, ?)";
 
@@ -45,6 +47,8 @@ public class AlumnoData {
         }
     }
 
+    
+    //Metodo BuscarAlumno
     public Alumno buscarAlumno(int id) {
         Alumno alumno = null;
         String sql = "SELECT * FROM alumno WHERE idAlumno = ?";
@@ -101,5 +105,52 @@ public class AlumnoData {
     return lista;
 }
 
+    
+    public void eliminarAlumno (int dni){
+    String sql = "DELETE FROM alumno WHERE dni = ?";
+    
+    try{
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setInt(1, dni);
+    ps.executeUpdate();
+    ps.close();
+    }
+    catch (SQLException ex) {
+        System.out.println("Error al eliminar un alumno"+ ex.getMessage());
+    }
+    
+    
+    }
+    
+    public void elminarAlumnoLogico (int dni){
+    String sql = "UPDATE alumno SET activo = false WHERE dni = ?";
+    
+    try{
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setInt(1, dni);
+    ps.executeUpdate();
+    ps.close();
+    }
+    catch(SQLException ex){
+        System.out.println("Error al dar de baja logica"+ ex.getMessage());
+    }
+    }
+    
+    public void actualizarAlumno(Alumno alumno){
+    String sql = "UPDATE alumno SET dni = ?, nombre = ?, fecNac = ?, activo = ? WHERE idAlumno = ?";
+    
+    try{
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setInt(1, alumno.getDni());
+    ps.setString(2, alumno.getNombre());
+    ps.setDate(3, alumno.getFecNac());
+    ps.setBoolean(4, alumno.isActivo());
+    ps.setInt(5, alumno.getIdAlumno());
+    ps.executeUpdate();
+    ps.close();
+    }
+    catch(SQLException ex){
+        System.out.println("Error al actualizar alumno" + ex.getMessage());
+    }
+    }
 }
-
