@@ -77,6 +77,34 @@ public class AlumnoData {
         return alumno;
     }
     
+    public Alumno buscarAlumnoDni(int dni) {
+        Alumno alumno = null;
+        String sql = "SELECT * FROM alumno WHERE dni = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                alumno = new Alumno(
+                        rs.getInt("idAlumno"),
+                        rs.getInt("dni"),
+                        rs.getString("nombre"),
+                        rs.getDate("fecNac"),
+                        rs.getBoolean("activo")
+                );
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar alumno: " + ex.getMessage());
+        }
+
+        return alumno;
+    }
+    
     public List<Alumno> listarAlumnos() {
     List<Alumno> lista = new ArrayList<>();
     String sql = "SELECT * FROM alumno";
@@ -122,7 +150,7 @@ public class AlumnoData {
     
     }
     
-    public void elminarAlumnoLogico (int dni){
+    public void eliminarAlumnoLogico (int dni){
     String sql = "UPDATE alumno SET activo = false WHERE dni = ?";
     
     try{
