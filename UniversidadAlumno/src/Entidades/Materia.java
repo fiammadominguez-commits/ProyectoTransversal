@@ -48,12 +48,4 @@ public class Materia {
         this.estado = estado;
     }
 
-    @Override
-    public String toString() {
-        return "Materia{" + 
-                "idMateria=" + idMateria + 
-                ", nombre=" + nombre + 
-                ", estado=" + estado + 
-                '}';
-    }
 }

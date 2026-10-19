@@ -5,6 +5,7 @@
  */
 package Vistas;
 import Entidades.Alumno;
+import Entidades.Cursada;
 import Entidades.Materia;
 import Persistencia.AlumnoData;
 import Persistencia.CursadaData;
@@ -14,18 +15,14 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FormularioInscripcionView extends javax.swing.JInternalFrame {
-
-    private AlumnoData aluData;
-    private MateriaData matData;
-    private CursadaData inscData;
+     private Persistencia.miConexion conexion = new Persistencia.miConexion("jdbc:mariadb://localhost:3306/universidad", "root", "");
+     private Persistencia.AlumnoData aluData = new Persistencia.AlumnoData(conexion);
+      private Persistencia.MateriaData matData = new Persistencia.MateriaData(conexion);
+    private Persistencia.CursadaData inscData = new Persistencia.CursadaData(conexion);
     private DefaultTableModel modelo;
 
     public FormularioInscripcionView() {
         initComponents();
-        
-        aluData = new AlumnoData();
-        matData = new MateriaData();
-        inscData = new CursadaData();
         
         modelo = new DefaultTableModel() {
             @Override
@@ -48,9 +45,9 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
     }
     private void cargarAlumnosCombo() {
     cboAlumnos.removeAllItems();
-    List<Alumno> lista = aluData.obtenerAlumnos();
+    List<Alumno> lista = aluData.listarAlumnos();
     for (Alumno a : lista) {
-        cboAlumnos.addItem(a.getIdAlumno() + " - " + a.getNombre());
+        cboAlumnos.addItem(a.getIdAlumno() + "-" + a.getNombre());
     }
 }
 
@@ -63,17 +60,28 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
 
     private void cargarMaterias() {
         borrarFilasTabla();
-        Alumno seleccionado = (Alumno) cboAlumnos.getSelectedItem();
-        if (seleccionado != null) {
+        String seleccionado =(String) cboAlumnos.getSelectedItem();
+        if (seleccionado != null && !seleccionado.equals("Seleccione Un Alumno")) {
+            String[] partes = seleccionado.split("-");
+            int idAlumno = Integer.parseInt(partes[0].trim());
             if (rbNoInscriptas.isSelected()) {
-                List<Materia> lista = inscData.obtenerMateriasNorescursadas(seleccionado.getIdAlumno());
+                List<Materia> lista = inscData.obtenerMateriasNoInscriptas(idAlumno);
                 for (Materia m : lista) {
-                    modelo.addRow(new Object[]{m.getIdMateria(), m.getNombre(), m.getAnio()});
+                    modelo.addRow(new Object[]{m.getIdMateria(),m.getNombre(),"-"});
                 }
             } else if (rbInscriptas.isSelected()) {
-                List<Materia> lista = inscData.obtenerMateriasCursadas(seleccionado.getIdAlumno());
-                for (Materia m : lista) {
-                    modelo.addRow(new Object[]{m.getIdMateria(), m.getNombre(), m.getAnio()});
+                List<Cursada> listaCursadas = inscData.obtenerCursadasPorAlumno(idAlumno);
+                List<Materia> listaMaterias = inscData.obtenerMateriasInscriptas(idAlumno);
+                for (Materia m : listaMaterias) {
+                    int id = m.getIdMateria();
+                    String nombre = m.getNombre();
+                    int anioCursada=0;
+                    for (Cursada c : listaCursadas) {
+                        if (m.getIdMateria()==c.getIdMateria()) {
+                            anioCursada= c.getCursa();
+                        }
+                    }
+                    modelo.addRow(new Object[]{id, nombre,anioCursada});
                 }
             }
         }
@@ -131,6 +139,10 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane1.setViewportView(TablaMaterias);
+        if (TablaMaterias.getColumnModel().getColumnCount() > 0) {
+            TablaMaterias.getColumnModel().getColumn(2).setHeaderValue("Estado");
+            TablaMaterias.getColumnModel().getColumn(3).setHeaderValue("");
+        }
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semilight", 3, 14)); // NOI18N
         jLabel1.setText("Formulario Inscripcion");
