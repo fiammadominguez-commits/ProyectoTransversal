@@ -81,6 +81,12 @@ public class Cursada {
         this.cursa = cursa;
     }
 
+    public Cursada(int idAlumno, int idMateria, int cursa) {
+        this.idAlumno = idAlumno;
+        this.idMateria = idMateria;
+        this.cursa = cursa;
+    }
+    
     @Override
     public String toString() {
         return "Cursada{" +

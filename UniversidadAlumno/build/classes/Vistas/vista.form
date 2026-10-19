@@ -37,6 +37,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Inscripcion"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="JMenuInscribirse">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Inscribirse"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMenuInscribirseActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>

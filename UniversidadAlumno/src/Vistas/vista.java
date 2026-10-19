@@ -19,6 +19,7 @@ public class vista extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        JMenuInscribirse = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -51,6 +52,15 @@ public class vista extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Inscripcion");
+
+        JMenuInscribirse.setText("Inscribirse");
+        JMenuInscribirse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMenuInscribirseActionPerformed(evt);
+            }
+        });
+        jMenu4.add(JMenuInscribirse);
+
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -74,6 +84,12 @@ public class vista extends javax.swing.JFrame {
             dskPanelEscritorio.add(vistaFormularioAlumno);
             vistaFormularioAlumno.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void JMenuInscribirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuInscribirseActionPerformed
+       FormularioInscripcionView vistaFormularioInscripcion = new FormularioInscripcionView();
+       dskPanelEscritorio.add(vistaFormularioInscripcion);
+       vistaFormularioInscripcion.setVisible(true);
+    }//GEN-LAST:event_JMenuInscribirseActionPerformed
 public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -107,6 +123,7 @@ public static void main(String args[]) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem JMenuInscribirse;
     private javax.swing.JDesktopPane dskPanelEscritorio;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

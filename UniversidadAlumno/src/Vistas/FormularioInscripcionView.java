@@ -13,16 +13,22 @@ import Persistencia.MateriaData;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
 
 public class FormularioInscripcionView extends javax.swing.JInternalFrame {
-     private Persistencia.miConexion conexion = new Persistencia.miConexion("jdbc:mariadb://localhost:3306/universidad", "root", "");
-     private Persistencia.AlumnoData aluData = new Persistencia.AlumnoData(conexion);
-      private Persistencia.MateriaData matData = new Persistencia.MateriaData(conexion);
-    private Persistencia.CursadaData inscData = new Persistencia.CursadaData(conexion);
-    private DefaultTableModel modelo;
+     private Persistencia.miConexion conexion; 
+     private Persistencia.AlumnoData aluData; 
+     private Persistencia.MateriaData matData; 
+     private Persistencia.CursadaData inscData; 
+     private DefaultTableModel modelo;
 
+    
     public FormularioInscripcionView() {
         initComponents();
+        this.conexion = new Persistencia.miConexion("jdbc:mariadb://localhost:3306/universidad", "root", ""); 
+        this.aluData = new Persistencia.AlumnoData(conexion); 
+        this.matData = new Persistencia.MateriaData(conexion);
+        this.inscData = new Persistencia.CursadaData(conexion);
         
         modelo = new DefaultTableModel() {
             @Override
@@ -95,10 +101,10 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
         rbNoInscriptas = new javax.swing.JRadioButton();
         btnInscribir = new javax.swing.JButton();
         btnAnular = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaMaterias = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JButton();
 
         cboAlumnos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Un Alumno" }));
         cboAlumnos.addActionListener(new java.awt.event.ActionListener() {
@@ -108,8 +114,23 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
         });
 
         rbInscriptas.setText("Materias Inscriptas");
+        rbInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbInscriptasActionPerformed(evt);
+            }
+        });
 
         rbNoInscriptas.setText("Materias NO inscriptas");
+        rbNoInscriptas.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbNoInscriptasStateChanged(evt);
+            }
+        });
+        rbNoInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbNoInscriptasActionPerformed(evt);
+            }
+        });
 
         btnInscribir.setText("Inscribir");
         btnInscribir.addActionListener(new java.awt.event.ActionListener() {
@@ -119,11 +140,9 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
         });
 
         btnAnular.setText("Anular Inscripcion");
-
-        btnSalir.setText("Salir");
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+        btnAnular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
+                btnAnularActionPerformed(evt);
             }
         });
 
@@ -147,6 +166,13 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semilight", 3, 14)); // NOI18N
         jLabel1.setText("Formulario Inscripcion");
 
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,13 +190,14 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnInscribir)
                                 .addGap(78, 78, 78)
                                 .addComponent(btnAnular)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSalir))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnSalir)
+                                .addGap(18, 18, 18)))))
                 .addGap(0, 32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -197,16 +224,65 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirActionPerformed
-        // TODO add your handling code here:
+        if (!rbNoInscriptas.isSelected()) {
+           javax.swing.JOptionPane.showMessageDialog(this, "Materia ya inscripta");
+            return;
+        }
+        String seleccionado =(String) cboAlumnos.getSelectedItem();
+        if (seleccionado != null && !seleccionado.equals("Seleccione Un Alumno")) {
+            String[] partes = seleccionado.split("-");
+            int idAlumno = Integer.parseInt(partes[0].trim());
+        int filaSeleccionada = TablaMaterias.getSelectedRow();
+            if (filaSeleccionada == -1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Tiene que seleccionar una fila");
+                return;
+            } 
+            int idMateria = (int) TablaMaterias.getValueAt(filaSeleccionada, 0);
+            int anio = LocalDate.now().getYear();
+            Cursada c = new Cursada(idAlumno, idMateria, anio);
+            inscData.guardarCursadaNull(c);
+            javax.swing.JOptionPane.showMessageDialog(this, "Inscripto Correctamente");
     }//GEN-LAST:event_btnInscribirActionPerformed
-
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSalirActionPerformed
-
+    }
+    
     private void cboAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboAlumnosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboAlumnosActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
+      String seleccionado =(String) cboAlumnos.getSelectedItem();
+      int idAlumno = 0;
+        if (seleccionado != null && !seleccionado.equals("Seleccione Un Alumno")) {
+            String[] partes = seleccionado.split("-");
+            idAlumno = Integer.parseInt(partes[0].trim());
+       } 
+         int filaSeleccionada = TablaMaterias.getSelectedRow();
+            if (filaSeleccionada == -1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Tiene que seleccionar una fila");
+                return;
+            } 
+            int idMateria = (int) TablaMaterias.getValueAt(filaSeleccionada, 0);
+            int anio = LocalDate.now().getYear();
+            Cursada c = new Cursada (idAlumno, idMateria, anio);
+            inscData.anularCursada(c);       
+             javax.swing.JOptionPane.showMessageDialog(this, "Inscripcion anulada con exito");
+    }//GEN-LAST:event_btnAnularActionPerformed
+
+    private void rbNoInscriptasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbNoInscriptasStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbNoInscriptasStateChanged
+
+    private void rbNoInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNoInscriptasActionPerformed
+      cargarMaterias();
+    }//GEN-LAST:event_rbNoInscriptasActionPerformed
+
+    private void rbInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbInscriptasActionPerformed
+      cargarMaterias();
+    }//GEN-LAST:event_rbInscriptasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

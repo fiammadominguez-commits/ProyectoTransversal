@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Entidades.Materia;
+import java.time.LocalDate;
 
 public class CursadaData {
 
@@ -39,7 +40,24 @@ public class CursadaData {
         } catch (SQLException ex) {
             System.out.println("Error al guardar cursada: " + ex.getMessage());
         }
-    }
+    }  
+    
+    public void guardarCursadaNull(Cursada c) {
+        String sql = "INSERT INTO cursada (idAlumno, idMateria, nota, asist, cursa) VALUES (?, ?, null, null, ?)";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, c.getIdAlumno());
+            ps.setInt(2, c.getIdMateria());
+            ps.setInt(3, c.getCursa());
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Cursada guardada.");
+        } catch (SQLException ex) {
+            System.out.println("Error al guardar cursada: " + ex.getMessage());
+        }
+    }  
+    
     public List<Cursada> listarCursadas() {
     List<Cursada> lista = new ArrayList<>();
     String sql = "SELECT * FROM cursada";
@@ -153,4 +171,17 @@ public class CursadaData {
     
     }
 
+    public void anularCursada( Cursada c){
+        String sql = "DELETE FROM cursada WHERE idAlumno = ? AND idMateria = ? AND cursa = ?";
+        int anio =LocalDate.now().getYear();
+    try { 
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setInt(1, c.getIdAlumno());
+    ps.setInt(2, c.getIdMateria());
+    ps.setInt(3, anio);
+    ps.executeUpdate();
+    } catch (SQLException ex)  {
+       System.out.println("Error al anular cursada: " + ex.getMessage());
+    }
+    }
 }
