@@ -96,6 +96,7 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btgrupo1 = new javax.swing.ButtonGroup();
         cboAlumnos = new javax.swing.JComboBox<>();
         rbInscriptas = new javax.swing.JRadioButton();
         rbNoInscriptas = new javax.swing.JRadioButton();
@@ -113,6 +114,7 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
             }
         });
 
+        btgrupo1.add(rbInscriptas);
         rbInscriptas.setText("Materias Inscriptas");
         rbInscriptas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +122,7 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
             }
         });
 
+        btgrupo1.add(rbNoInscriptas);
         rbNoInscriptas.setText("Materias NO inscriptas");
         rbNoInscriptas.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -287,6 +290,7 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaMaterias;
+    private javax.swing.ButtonGroup btgrupo1;
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnInscribir;
     private javax.swing.JButton btnSalir;

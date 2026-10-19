@@ -342,6 +342,7 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
     
     Alumno alumnoActualizado = new Alumno(id,dni,nombre,FecNac,isActivo);
     aluData.actualizarAlumno(alumnoActualizado);
+     javax.swing.JOptionPane.showMessageDialog(this, "Alumno actualizado con exito");
         }
         catch(NumberFormatException e){
         javax.swing.JOptionPane.showMessageDialog(this, "El Dni tiene que ser un valor valido"+ e.getMessage());
