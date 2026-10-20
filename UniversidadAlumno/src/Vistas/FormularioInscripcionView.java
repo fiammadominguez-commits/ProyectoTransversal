@@ -245,6 +245,7 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
             Cursada c = new Cursada(idAlumno, idMateria, anio);
             inscData.guardarCursadaNull(c);
             javax.swing.JOptionPane.showMessageDialog(this, "Inscripto Correctamente");
+            cargarMaterias();
     }//GEN-LAST:event_btnInscribirActionPerformed
     }
     
@@ -257,7 +258,11 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
-      String seleccionado =(String) cboAlumnos.getSelectedItem();
+ if (!rbInscriptas.isSelected()) {
+           javax.swing.JOptionPane.showMessageDialog(this, "La Materia no esta entre sus inscripciones");
+            return;
+        }
+        String seleccionado =(String) cboAlumnos.getSelectedItem();
       int idAlumno = 0;
         if (seleccionado != null && !seleccionado.equals("Seleccione Un Alumno")) {
             String[] partes = seleccionado.split("-");
@@ -273,6 +278,7 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
             Cursada c = new Cursada (idAlumno, idMateria, anio);
             inscData.anularCursada(c);       
              javax.swing.JOptionPane.showMessageDialog(this, "Inscripcion anulada con exito");
+             cargarMaterias();
     }//GEN-LAST:event_btnAnularActionPerformed
 
     private void rbNoInscriptasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbNoInscriptasStateChanged
