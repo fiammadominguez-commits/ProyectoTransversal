@@ -22,6 +22,8 @@ public class vista extends javax.swing.JFrame {
         jmenItemFormMateria = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         JMenuInscribirse = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        itemCargarNota = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -76,6 +78,18 @@ public class vista extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu5.setText("Administrar");
+
+        itemCargarNota.setText("Cargar Nota");
+        itemCargarNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCargarNotaActionPerformed(evt);
+            }
+        });
+        jMenu5.add(itemCargarNota);
+
+        jMenuBar1.add(jMenu5);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -109,6 +123,12 @@ public class vista extends javax.swing.JFrame {
        dskPanelEscritorio.add(fm);
        fm.setVisible(true);
     }//GEN-LAST:event_jmenItemFormMateriaActionPerformed
+
+    private void itemCargarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCargarNotaActionPerformed
+       VistaCargarNota cn = new VistaCargarNota();
+       dskPanelEscritorio.add(cn);
+       cn.setVisible(true);
+    }//GEN-LAST:event_itemCargarNotaActionPerformed
 public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -144,10 +164,12 @@ public static void main(String args[]) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem JMenuInscribirse;
     private javax.swing.JDesktopPane dskPanelEscritorio;
+    private javax.swing.JMenuItem itemCargarNota;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPasswordField jPasswordField1;

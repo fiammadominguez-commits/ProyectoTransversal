@@ -184,4 +184,19 @@ public class CursadaData {
        System.out.println("Error al anular cursada: " + ex.getMessage());
     }
     }
+    
+    public void cargatNota (Cursada c, float notaNueva){
+    String sql = "UPDATE cursada SET nota = ? WHERE idAlumno = ? AND idMateria = ? AND cursa = ?";
+    try{
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setFloat(1, notaNueva);
+    ps.setInt(2, c.getIdAlumno());
+    ps.setInt(3, c.getIdMateria());
+    ps.setInt(4, c.getCursa());
+    ps.executeUpdate();
+    }
+    catch(SQLException ex){
+     System.out.println("Error al actualizar nota: " + ex.getMessage());
+    }
+    }
 }

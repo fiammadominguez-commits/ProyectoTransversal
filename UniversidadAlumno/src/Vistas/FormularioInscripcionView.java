@@ -162,7 +162,6 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(TablaMaterias);
         if (TablaMaterias.getColumnModel().getColumnCount() > 0) {
-            TablaMaterias.getColumnModel().getColumn(2).setHeaderValue("Estado");
             TablaMaterias.getColumnModel().getColumn(3).setHeaderValue("");
         }
 
