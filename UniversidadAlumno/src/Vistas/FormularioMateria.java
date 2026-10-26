@@ -23,16 +23,21 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     public FormularioMateria() {
         initComponents();
         jcEstado.setSelected(true);
+        
+        
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
     }
             private void limpiarCampos() {
-                    jtId.setText("");
-                    jtNombre.setText("");
-                    jcEstado.setSelected(true);
-                    jtId.requestFocus();
+                        jtId.setText("");
+                        jtNombre.setText("");
+                        jcEstado.setSelected(true);
+
+                         jtId.setEditable(true);
+                         jtId.requestFocus();
+                    
 }
 
 
@@ -180,6 +185,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
             if (nombre.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "El nombre de la materia no puede estar vacío.");
+                jtNombre.requestFocus();
                 return;
             }
 
@@ -207,12 +213,16 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             if (materia != null) {
                 jtNombre.setText(materia.getNombre());
                 jcEstado.setSelected(materia.getEstado() == 1);
+                jtId.setEditable(false);
+                
             } else {
                 JOptionPane.showMessageDialog(this, "No existe materia con ese ID.");
+                       jtId.requestFocus();
             }
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El ID debe ser un número entero válido.");
+            jtId.requestFocus();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al buscar materia: " + e.getMessage());
         }
@@ -228,6 +238,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
             if (nombre.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío.");
+                jtNombre.requestFocus();
                 return;
             }
 
