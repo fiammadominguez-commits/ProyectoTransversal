@@ -48,6 +48,7 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JButton();
         btnDarDeBaja = new javax.swing.JButton();
+        Formulario1 = new javax.swing.JLabel();
         btnActializar = new javax.swing.JButton();
 
         NombreCompleto.setText("Nombre");
@@ -81,6 +82,12 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
 
         Nacimiento.setText("Fecha de nacimiento");
 
+        jtDni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtDniActionPerformed(evt);
+            }
+        });
+
         Documento.setText("Documento");
 
         btnSalir.setText("Salir");
@@ -106,25 +113,34 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
             }
         });
 
+        Formulario1.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        Formulario1.setText("Eliminar o dar de Baja Por DNI");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(btnEliminar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDarDeBaja)
+                .addGap(29, 29, 29))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addComponent(btnDarDeBaja)
-                .addGap(39, 39, 39))
+                .addComponent(Formulario1)
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Formulario1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnDarDeBaja))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         btnActializar.setText("Actualizar");
@@ -222,12 +238,14 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
               JOptionPane.showMessageDialog(this,
             "Debe ingresar un DNI.");
                 jtDni.requestFocus();
+                jtDni.selectAll();
                 return;
 }
                if (jtNombre.getText().trim().isEmpty()) {
          JOptionPane.showMessageDialog(this,
             "Debe ingresar un nombre.");
           jtNombre.requestFocus();
+          jtDni.selectAll();
           return;
         }
         int dni = Integer.parseInt(jtDni.getText().trim());
@@ -281,7 +299,15 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
       try{
-        int dni = Integer.parseInt(jtDni.getText());
+           int dni = Integer.parseInt(jtDni.getText());
+           Alumno alumnoBuscado= aluData.buscarAlumno(dni);
+        if (alumnoBuscado==null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El alumno no esta Registrado");
+                jtDni.requestFocusInWindow();
+                jtDni.selectAll();
+                return;
+            }
+
         aluData.eliminarAlumno(dni);
           javax.swing.JOptionPane.showMessageDialog(this, "Alumno eliminado exitosamente");
       }
@@ -298,6 +324,7 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
             if (jtDni.getText().trim().isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "El campo de DNI esta vacio");
                  jtDni.requestFocus();
+                  jtDni.selectAll();
                 return;
             }
         int dni = Integer.parseInt(jtDni.getText().trim());
@@ -305,6 +332,7 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
             if (alumnoBuscado ==null) {
                 javax.swing.JOptionPane.showMessageDialog(this, "No existe un alumno con ese DNI");
                 jtDni.requestFocus();
+                jtDni.selectAll();
                 return;
             }
        String nombre = alumnoBuscado.getNombre();
@@ -317,17 +345,28 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
         catch(NumberFormatException e){
         javax.swing.JOptionPane.showMessageDialog(this, "El DNI es incorrecto");
         jtDni.requestFocus();
+         jtDni.selectAll();
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnDarDeBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarDeBajaActionPerformed
        try{
         int dni = Integer.parseInt(jtDni.getText().trim());
+       Alumno alumnoBuscado= aluData.buscarAlumnoDni(dni);
+        if (alumnoBuscado==null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El alumno no esta Registrado");
+                jtDni.requestFocusInWindow();
+                jtDni.selectAll();
+                return;
+            }
         aluData.eliminarAlumnoLogico(dni);
           javax.swing.JOptionPane.showMessageDialog(this, "Alumno Dado de Baja exitoxamente");
+          jcEstado.setSelected(false);
       }
       catch(NumberFormatException ex){
-         javax.swing.JOptionPane.showMessageDialog(this, "Es nesesario colocar un dato valido"+ ex);
+         javax.swing.JOptionPane.showMessageDialog(this, "Es nesesario colocar un DNI valido"+ ex);
+         jtDni.requestFocusInWindow();
+         jtDni.selectAll();
       }
       catch (Exception e) {
         javax.swing.JOptionPane.showMessageDialog(this, "Error al dar de baja el alumno: " + e.getMessage());
@@ -338,6 +377,8 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
         try{
         if (jtDni.getText().trim().isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "El campo de dni esta vacio");
+            jtDni.requestFocusInWindow();
+            jtDni.selectAll();
             return;
         }
         int dni = Integer.parseInt(jtDni.getText().trim());
@@ -345,6 +386,8 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
         Alumno alumnoBuscado = aluData.buscarAlumnoDni(dni);
             if (alumnoBuscado==null) {
                 javax.swing.JOptionPane.showMessageDialog(this, "No se puede actualizar, el Dni no esta registrado");
+                jtDni.requestFocusInWindow();
+                jtDni.selectAll();
                 return;
             }
         int id = alumnoBuscado.getIdAlumno();
@@ -358,17 +401,26 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
         }
         catch(NumberFormatException e){
         javax.swing.JOptionPane.showMessageDialog(this, "El Dni tiene que ser un valor valido"+ e.getMessage());
+        jtDni.requestFocusInWindow();
+        jtDni.selectAll();
         }
         catch(IllegalArgumentException e){
          javax.swing.JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Usá AAAA-MM-DD (ej: 2002-05-20).");
+         jtFechaNac.requestFocusInWindow();
+         jtFechaNac.selectAll();
         }
     }//GEN-LAST:event_btnActializarActionPerformed
+
+    private void jtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtDniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtDniActionPerformed
 
     // End of variables declaration                              
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Documento;
     private javax.swing.JLabel Formulario;
+    private javax.swing.JLabel Formulario1;
     private javax.swing.JLabel Nacimiento;
     private javax.swing.JLabel NombreCompleto;
     private javax.swing.JButton bntGuardar;
