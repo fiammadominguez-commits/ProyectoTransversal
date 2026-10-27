@@ -47,5 +47,8 @@ public class Materia {
     public void setEstado(int estado) {
         this.estado = estado;
     }
-
+    @Override
+    public String toString() {
+    return nombre;
+}
 }

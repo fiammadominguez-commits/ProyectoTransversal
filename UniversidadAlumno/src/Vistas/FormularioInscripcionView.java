@@ -52,9 +52,9 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
     private void cargarAlumnosCombo() {
     cboAlumnos.removeAllItems();
     List<Alumno> lista = aluData.listarAlumnos();
-    for (Alumno a : lista) {
-        cboAlumnos.addItem(a.getIdAlumno() + "-" + a.getNombre());
-    }
+          for (Alumno a : lista) {
+                cboAlumnos.addItem(a);
+}
 }
 
     private void borrarFilasTabla() {
@@ -66,10 +66,11 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
 
     private void cargarMaterias() {
         borrarFilasTabla();
-        String seleccionado =(String) cboAlumnos.getSelectedItem();
-        if (seleccionado != null && !seleccionado.equals("Seleccione Un Alumno")) {
-            String[] partes = seleccionado.split("-");
-            int idAlumno = Integer.parseInt(partes[0].trim());
+        
+                Alumno alumnoSeleccionado = (Alumno) cboAlumnos.getSelectedItem();
+             if (alumnoSeleccionado != null) {
+            int idAlumno = alumnoSeleccionado.getIdAlumno();
+            
             if (rbNoInscriptas.isSelected()) {
                 List<Materia> lista = inscData.obtenerMateriasNoInscriptas(idAlumno);
                 for (Materia m : lista) {
@@ -107,7 +108,8 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
 
-        cboAlumnos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Un Alumno" }));
+        setBackground(new java.awt.Color(204, 204, 204));
+
         cboAlumnos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboAlumnosActionPerformed(evt);
@@ -185,10 +187,10 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
                         .addGap(193, 193, 193)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rbNoInscriptas, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                                .addComponent(rbInscriptas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(rbInscriptas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cboAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -219,7 +221,7 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
                     .addComponent(btnInscribir)
                     .addComponent(btnAnular)
                     .addComponent(btnSalir))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -230,18 +232,20 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
            javax.swing.JOptionPane.showMessageDialog(this, "Materia ya inscripta");
             return;
         }
-        String seleccionado =(String) cboAlumnos.getSelectedItem();
-        if (seleccionado != null && !seleccionado.equals("Seleccione Un Alumno")) {
-            String[] partes = seleccionado.split("-");
-            int idAlumno = Integer.parseInt(partes[0].trim());
-        int filaSeleccionada = TablaMaterias.getSelectedRow();
+        
+              Alumno alumnoSeleccionado = (Alumno) cboAlumnos.getSelectedItem();
+             if (alumnoSeleccionado != null) {
+             int idAlumno = alumnoSeleccionado.getIdAlumno();
+
+           int filaSeleccionada = TablaMaterias.getSelectedRow();
             if (filaSeleccionada == -1) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Tiene que seleccionar una fila");
                 return;
             } 
             int idMateria = (int) TablaMaterias.getValueAt(filaSeleccionada, 0);
             int anio = LocalDate.now().getYear();
-            Cursada c = new Cursada(idAlumno, idMateria, anio);
+            Cursada c = new Cursada(idAlumno, idMateria, 0f, 0f, anio);
+            
             inscData.guardarCursadaNull(c);
             javax.swing.JOptionPane.showMessageDialog(this, "Inscripto Correctamente");
             cargarMaterias();
@@ -261,12 +265,15 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
            javax.swing.JOptionPane.showMessageDialog(this, "La Materia no esta entre sus inscripciones");
             return;
         }
-        String seleccionado =(String) cboAlumnos.getSelectedItem();
-      int idAlumno = 0;
-        if (seleccionado != null && !seleccionado.equals("Seleccione Un Alumno")) {
-            String[] partes = seleccionado.split("-");
-            idAlumno = Integer.parseInt(partes[0].trim());
-       } 
+ 
+        Alumno alumnoSeleccionado = (Alumno) cboAlumnos.getSelectedItem();
+            if (alumnoSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un alumno");
+             return;
+                }
+
+            int idAlumno = alumnoSeleccionado.getIdAlumno();
+
          int filaSeleccionada = TablaMaterias.getSelectedRow();
             if (filaSeleccionada == -1) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Tiene que seleccionar una fila");
@@ -274,7 +281,8 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
             } 
             int idMateria = (int) TablaMaterias.getValueAt(filaSeleccionada, 0);
             int anio = LocalDate.now().getYear();
-            Cursada c = new Cursada (idAlumno, idMateria, anio);
+            
+            Cursada c = new Cursada (idAlumno, idMateria, 0f, 0f, anio);
             inscData.anularCursada(c);       
              javax.swing.JOptionPane.showMessageDialog(this, "Inscripcion anulada con exito");
              cargarMaterias();
@@ -299,7 +307,7 @@ public class FormularioInscripcionView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnInscribir;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> cboAlumnos;
+    private javax.swing.JComboBox<Alumno> cboAlumnos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton rbInscriptas;

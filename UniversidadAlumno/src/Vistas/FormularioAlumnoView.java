@@ -51,6 +51,8 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
         Formulario1 = new javax.swing.JLabel();
         btnActializar = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 204, 204));
+
         NombreCompleto.setText("Nombre");
 
         jcEstado.setSelected(true);
@@ -63,6 +65,7 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
             }
         });
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/BUSCAR.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,6 +93,8 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
 
         Documento.setText("Documento");
 
+        btnSalir.setBackground(new java.awt.Color(255, 255, 255));
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/eliminar.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +134,7 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Formulario1)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,7 +305,7 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
       try{
            int dni = Integer.parseInt(jtDni.getText());
-           Alumno alumnoBuscado= aluData.buscarAlumno(dni);
+           Alumno alumnoBuscado= aluData.buscarAlumnoDni(dni);
         if (alumnoBuscado==null) {
                 javax.swing.JOptionPane.showMessageDialog(this, "El alumno no esta Registrado");
                 jtDni.requestFocusInWindow();

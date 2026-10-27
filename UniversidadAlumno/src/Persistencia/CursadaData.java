@@ -185,7 +185,7 @@ public class CursadaData {
     }
     }
     
-    public void cargatNota (Cursada c, float notaNueva){
+    public void cargarNota (Cursada c, float notaNueva){
     String sql = "UPDATE cursada SET nota = ? WHERE idAlumno = ? AND idMateria = ? AND cursa = ?";
     try{
     PreparedStatement ps = con.prepareStatement(sql);

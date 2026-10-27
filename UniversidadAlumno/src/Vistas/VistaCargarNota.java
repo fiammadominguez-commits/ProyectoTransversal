@@ -241,7 +241,7 @@ String seleccionado =(String) cboAlumnos.getSelectedItem();
             int idMateria = (int) tablaMaterias.getValueAt(filaSeleccionada, 0);
              int anio = (int) tablaMaterias.getValueAt(filaSeleccionada, 2);
              Cursada c = new Cursada(idAlumno, idMateria, anio);
-             inscData.cargatNota(c, notaNueva);
+             inscData.cargarNota(c, notaNueva);
                javax.swing.JOptionPane.showMessageDialog(this, "Nota Cargada Correctamente");
                cargarMaterias();
         }
