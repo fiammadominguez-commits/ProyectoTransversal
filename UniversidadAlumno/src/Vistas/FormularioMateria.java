@@ -63,6 +63,8 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         setBackground(new java.awt.Color(255, 255, 204));
 
         lblTitulo.setBackground(new java.awt.Color(255, 204, 255));
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/MATERIA.png"))); // NOI18N
         lblTitulo.setText("Formulario Materias");
 
         lblId.setText("ID Materia");
@@ -71,6 +73,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
         lblEstado.setText("Estado");
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/BUSCAR.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,9 +136,6 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(btnGuardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -143,7 +143,10 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnNuevo)))
+                        .addComponent(btnNuevo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(lblTitulo)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -166,7 +169,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcEstado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnModificar)

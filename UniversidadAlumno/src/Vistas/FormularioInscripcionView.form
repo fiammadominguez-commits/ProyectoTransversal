@@ -35,7 +35,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="rbNoInscriptas" min="-2" pref="214" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jLabel1" alignment="0" pref="163" max="32767" attributes="0"/>
+                              <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                               <Component id="rbInscriptas" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <Component id="cboAlumnos" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
@@ -189,11 +189,17 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Yu Gothic UI Semilight" size="14" style="3"/>
         </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/IMAGENES/INSCRIPCION.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Formulario Inscripcion"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnSalir">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/IMAGENES/eliminar.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Salir"/>
       </Properties>
       <Events>

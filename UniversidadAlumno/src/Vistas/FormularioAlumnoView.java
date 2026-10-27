@@ -81,6 +81,7 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
         });
 
         Formulario.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        Formulario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/alumno.png"))); // NOI18N
         Formulario.setText("Formulario Alumnos");
 
         Nacimiento.setText("Fecha de nacimiento");
@@ -173,9 +174,6 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(96, 96, 96)
-                                .addComponent(Formulario, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(bntGuardar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -202,6 +200,10 @@ public class FormularioAlumnoView extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscar)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(Formulario, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
